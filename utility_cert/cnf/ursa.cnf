@@ -1,0 +1,27 @@
+#name_main=<user_ID>.entity
+entity_node_name = 'ursa'		# <user_ID>, caveat: manual as not able to obtain from parameter.sh (check with menu display)
+name_main=$entity_node_name.rsa2048
+[req]
+default_bits = 2048
+default_md = sha256
+prompt = no
+distinguished_name = dn
+req_extensions = ext
+input_password = 1111
+encrypt_key = no
+[dn]
+CN = www.$name_main.com
+emailAddress = $name_main@$name_main.com
+O = $name_main
+L = CA
+C = US
+[ext]
+basicConstraints=CA:TRUE
+subjectAltName = DNS:www.$name_main.com,DNS:$name_main.com
+[ my_subject_alt_names ]
+DNS.1 = *.$name_main.org
+DNS.2 = *.$name_main.net
+DNS.3 = *.$name_main.in
+DNS.4 = $name_main.org
+DNS.5 = $name_main.net
+DNS.6 = $name_main.in

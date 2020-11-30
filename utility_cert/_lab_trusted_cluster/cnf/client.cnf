@@ -1,0 +1,24 @@
+entity_node_name=client		# caveat: manual as not able to obtain from parameter.sh (check with menu display)
+name_main=$entity_node_name.rsa2048
+
+[req]
+default_bits = 2048
+default_md = sha256
+prompt = no
+distinguished_name = dn
+req_extensions = ext
+input_password = 1111
+encrypt_key = no
+[dn]
+CN = www.$name_main.com
+emailAddress = $name_main@$name_main.com
+O = $name_main
+L = CA
+C = US
+
+[ext]                      
+basicConstraints = CA:FALSE
+nsCertType = client
+keyUsage = digitalSignature, keyEncipherment
+extendedKeyUsage = clientAuth
+nsComment = "OpenSSL Certificate for SSL Client"

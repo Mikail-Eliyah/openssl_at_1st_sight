@@ -1,0 +1,4 @@
+# ensure # install libssl-dev
+e.g. $ apt-get install openssl-devel # libssl-dev
+
+gcc pbkdf2.c -lssl -lcrypto -o pbkdf2

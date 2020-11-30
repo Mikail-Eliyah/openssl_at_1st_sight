@@ -1,0 +1,12 @@
+# line delete syntax
+sed '/find/d' file > file.mod
+# where
+# find - find regular expression
+# d    - delete command
+
+ok # _1001__ #
+
+<b>inside</b> outside <i>inside</i> outside.
+
+< see only this >
+

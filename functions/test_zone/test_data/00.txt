@@ -1,0 +1,9 @@
+
+
+
+		<meta-function>
+		<function> __init__ </function> 
+		<parameter> name: test_00 </parameter>
+		<return> None </return>
+		</meta-function>
+		
