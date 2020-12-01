@@ -197,3 +197,11 @@ function get_functions_in_script(){
 	cat $filename_script | grep "^function" | sed -e 's/function\(.*\){/\1/' |  wc -l
 	
 }
+
+# ================================================
+# recursive delete of .o files
+#find . -type f -name '*.o' -delete
+#find . -type f -name '*.o' -exec rm {} +
+#find . -type f -name '*.sh' -exec file {} +
+
+

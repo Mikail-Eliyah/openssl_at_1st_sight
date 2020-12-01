@@ -147,11 +147,28 @@ function is_cert_expired (){
 	check_date_expiry;
 }
 
+function get_cert_from_IP_with_port (){
+	# = Get cert from server
+	#IP=8.8.8.8 # 10.150.240.107
+	#port_num=443
+	IP="$1"
+	port_num="$2"
+	echo | openssl s_client -servername $IP -connect $IP:$port_num 2>/dev/null | openssl x509 -text
+}
+
+function get_cert_from_dns_name_with_port (){
+	# = Get cert from server
+	#dns_name=www.example.com
+	dns_name="$1"
+	port_num="$2"
+	openssl s_client -showcerts -servername $dns_name -connect $dns_name:$port_num </dev/null
+
+	#echo | openssl s_client -servername $dns_name -connect $dns_name:$port_num 2>/dev/null | openssl x509 -text
+
+}
 
 : '
 notes: 
-
-
 
 
 
