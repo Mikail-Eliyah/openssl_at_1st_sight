@@ -93,3 +93,4 @@ function view_file_as_binary () {
 	xxd -b $filename
 	echo $demarcator
 }
+

@@ -163,3 +163,4 @@ function string_to_array_with_single_char_delimiters (){
 	#array[42]=Earth	
 }
 
+
