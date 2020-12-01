@@ -147,36 +147,87 @@ function string_to_array_with_single_pre_fixed_delimiters (){
 	#array[42]=Earth	
 }
 
+declare -a array_elements=()
+declare number_of_words=0
+
 function string_to_array_with_single_char_delimiters (){
 	string="$1"
 	#delimiters=', '
 	delimiters="$2"
 	IFS=$delimiters read -r -a array <<< "$string"
 	
+	unset array_elements # clear array
+	
 	for index in "${!array[@]}"
 	do
 		echo "$index ${array[index]}"
+		array_elements[${#array_elements[@]}]=$(echo "${array[index]}")
 	done	
 	
 	# delete and define array elements
 	#unset "array[1]"
 	#array[42]=Earth	
+	
+	number_of_words=${#array_elements[@]}
+	
+	echo "number_of_words: " $number_of_words
 }
 
 # $ string_to_array_with_single_substring_delimiters "1[test]123[test]23" '\[test\]'
 
 # e.g. string_in="1--123--23"
 # e.g. substring="--"
+
 function string_to_array_with_single_substring_delimiters (){
 	string_in="$1"
 	substring="$2"
+	
+	unset array_elements # clear array
 
 	while test "${string_in#*$substring}" != "$string_in" ; do
 	  echo "${string_in%%$substring*}"
-	  string_in="${string_in#*$substring}"
+	  #string_in="${string_in#*$substring}"
+	  #echo ":" $string_in
+	  array_elements[${#array_elements[@]}]=$(echo "${string_in%%$substring*}")
 	done
-	echo "$string_in"
+	#echo "$string_in"
+	
+	number_of_words=${#array_elements[@]}
 }
 
+# str="the quick brown fox jumps over the lazy bear"
+function extract_word_given_index (){
+	str="$1"
+	index_of_word_to_be_extracted="$2"
+	#echo ${#str}
+	word_extracted=''
+	
+	#echo "str: "  $str
+	# echo $str | cut -d ' ' -f1,2,3
+	string_to_array_with_single_char_delimiters "$1" " "
+	
+	#number_of_words="${array_elements[@]}"
+	#number_of_words=9
+	#echo $number_of_words
 
+	if [ $index_of_word_to_be_extracted -lt $number_of_words ]
+	then
+		word_extracted=$(echo $str | cut -d ' ' -f"$index_of_word_to_be_extracted")
+		
+		echo "word_extracted: " $word_extracted
+	else
+		echo "index_of_word_to_be_extracted > number_of_words"
+	fi
+	
+}
 
+# word_count_in_str "the quick brown fox jumps over the lazy bear"
+function word_count_in_str(){
+	str_without_punctuation=$(replace_all_symbols "$1") # remove_punctuation_from_str
+	
+	#echo $str_without_punctuation
+	
+	string_to_array_with_single_char_delimiters "$str_without_punctuation" " "
+	
+	echo "number_of_words:" $number_of_words
+}
