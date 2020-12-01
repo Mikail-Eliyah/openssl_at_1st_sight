@@ -163,4 +163,20 @@ function string_to_array_with_single_char_delimiters (){
 	#array[42]=Earth	
 }
 
+# $ string_to_array_with_single_substring_delimiters "1[test]123[test]23" '\[test\]'
+
+# e.g. string_in="1--123--23"
+# e.g. substring="--"
+function string_to_array_with_single_substring_delimiters (){
+	string_in="$1"
+	substring="$2"
+
+	while test "${string_in#*$substring}" != "$string_in" ; do
+	  echo "${string_in%%$substring*}"
+	  string_in="${string_in#*$substring}"
+	done
+	echo "$string_in"
+}
+
+
 
