@@ -33,7 +33,6 @@ function find_file_given_start_path(){
 	find $start_path -name $file_name -print
 }
 
-
 function get_file_name_and_extension(){
 	# fullfile='C:\Users\x\Desktop\fs.cfg'
 	
@@ -128,6 +127,17 @@ function find_file_given_size(){
 		read -p "file_size_minimal (e.g. 1M for >= 1Mb):" file_size
 
 		find . -size +$file_size -ls
+}
+
+function sort_files_to_size(){ 
+		
+		if [ -z "$1" ]; then
+			path_to="."
+		else
+			path_to="$1"
+		fi
+		
+		du -hsb $path_to/* | sort -h
 }
 
 function get_filename_n_extension () {
