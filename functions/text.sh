@@ -47,6 +47,9 @@ function seek_further {
 }
 
 function remove_prefix { 
+	target_str="$1"
+	prefix_to_remove="$2"
+	
 	if [ "$target_str" == "" ] # not specified 
 	then
 		echo "Usage : remove_prefix $target_str $prefix_to_remove"
@@ -63,6 +66,9 @@ function remove_prefix {
 }
 
 function remove_suffix { 
+	target_str="$1"
+	suffix_to_remove="$2"
+	
 	if [ "$target_str" == "" ] # not specified 
 	then
 		echo "Usage : remove_suffix $target_str $prefix_to_remove"

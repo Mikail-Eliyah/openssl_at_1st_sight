@@ -77,6 +77,30 @@ function git_apply_patch (){
 
 function git_name () {
 	basename `git rev-parse --show-toplevel`
+	# git remote show origin
+	# basename -s .git `git config --get remote.origin.url`
+	# 
+	# basename $(git remote get-url origin)
+}
+
+function git_get_github_url (){
+	github_url=$(git remote show origin | grep "https" | grep "Push  URL:")
+
+	github_url=$(remove_prefix "$github_url" "  Push  URL: ")
+	github_url=$(remove_suffix "$github_url" '.git')
+	echo "$github_url"
+}
+
+chrome_exe_location="'/cygdrive/c/Program Files (x86)/Google/Chrome/Application/chrome.exe' "
+
+function git_display_commit () {
+	hash_id="$1"
+	github_url=$(git_get_github_url)
+	
+	github_commit_url=$github_url"/commit/"$hash_id
+	
+	echo $github_commit_url
+	eval ${chrome_exe_location} $github_commit_url
 }
 
 function git_resynch() {
