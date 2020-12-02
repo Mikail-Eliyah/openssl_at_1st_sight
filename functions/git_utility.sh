@@ -13,7 +13,6 @@ function git_which_repo (){
 	git remote -v
 }
 
-
 function git_latest_status (){
 	git log -1
 }
@@ -112,6 +111,104 @@ function git_resynch() {
 function git_test_connection(){
 	ssh -T git@github.com;
 	git ls-remote;
+}
+
+function git_main() {
+	git_menu;
+	
+	number_of_digits_for_inputs=2
+	# read  -n 1 -p "Input Selection:" git_menu_input
+	read  -n $number_of_digits_for_inputs -p "Input Selection:" git_menu_input
+	echo ""
+	
+    if [ "$git_menu_input" = "1" ]; then
+		read -r -p "comments [e.g. updated: / added:] : "  comments
+		
+		git_commit_and_push_to_main $comments;
+    elif [ "$git_menu_input" = "2" ]; then
+		git_show_line_index_by_ID; #$id; 	
+	elif [ "$git_menu_input" = "3" ]; then
+		git_latest_status;
+    elif [ "$git_menu_input" = "4" ]; then
+		git_which_repo;
+    elif [ "$git_menu_input" = "5" ]; then
+		git_search_by_ID;
+    elif [ "$git_menu_input" = "6" ];then
+		git_name;
+    elif [ "$git_menu_input" = "7" ];then
+		git_resynch;
+    elif [ "$git_menu_input" = "8" ];then
+		git_test_connection;
+	elif [ "$git_menu_input" = "9" ];then		
+		read -r -p "file_name [e.g. ./read.me:] : "  file_name
+			
+		read -r -p "comments [e.g. reason for file removal:] : "  comments
+	
+		git_remove_file;
+
+    elif [ "$git_menu_input" = "10" ];then	
+		git_get_github_url;
+
+    elif [ "$git_menu_input" = "11" ];then
+		read -r -p "hash_id [e.g. from git log] : "  hash_id
+		
+		git_display_commit;
+    elif [ "$git_menu_input" = "12" ];then	
+		git_create_patch;
+    elif [ "$git_menu_input" = "13" ];then	
+		ls;
+		read -r -p "Apply path_file [] : "  path_file
+		
+		git_apply_patch;		
+		
+    elif [ "$git_menu_input" = "x" -o "$git_menu_input" = "X" ];then # -o := `or` and `||`
+		exit_program;
+    else
+		default_action;
+    fi
+}	
+	
+}
+
+function git_menu() {
+  echo "1 : git_commit_and_push_to_main"
+  echo "2 : git_show_line_index_by_ID"   
+  echo "3 : git_latest_status"
+  echo "4 : git_which_repo"  
+  echo "5 : git_search_by_ID"
+  echo "6 : git_name"
+  echo "7 : git_resynch"
+  echo "8 : git_test_connection"  
+  echo "9 : git_remove_file"  
+  echo "10: git_get_github_url"    
+  echo "11: git_display_commit <commit_ID>"
+  echo "12: git_create_patch"
+  echo "13: git_apply_patch"
+
+  echo ""
+  echo "'x' or 'X' to exit the script"
+  
+  date +"%T.%N"
+  date +%s
+  get_timestamp
+}
+
+function exit_program() {
+	printf "\n quit.\n"
+	echo 'X' : quitprogram
+}
+
+function default_action() {
+    echo "You have entered an invallid selection!"
+    echo "Please try again!"
+    echo ""
+    echo "Press any key to continue..."
+    read -n 1
+    clear
+	set -u # force it to treat unset variables as an error 
+	unset git_menu_input
+	#echo $git_menu_input 
+    git_main
 }
 
 # Make Git store the username and password and it will never ask for them.
