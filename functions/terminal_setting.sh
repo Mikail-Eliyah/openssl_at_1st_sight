@@ -1,13 +1,61 @@
 #!/bin/bash
 alias clr="echo -en '\033c'"
 
+# $ list_bash_functions | delete_lines_from_to 75 80 | cat -n # --number
 function list_bash_functions() {
+	#echo ""
+	#echo "======================"
+	#echo "List of bash functions"
+    #echo "======================"
+	eval "compgen -A function" 
+}
+
+function list_bash_functions_enumerated() {
 	echo ""
 	echo "======================"
 	echo "List of bash functions"
     echo "======================"
-	eval "compgen -A function" 
+	list_bash_functions | grep -v gawk | cat -n
 }
+
+
+function search_function () {
+	keyword="$1"
+	list_bash_functions | seek_further $keyword
+}
+
+function find_bash_function_in_list(){
+	read   -p "Input keyword (e.g. update*):" keyword
+	echo 'Found (if not empty or NIL): '
+	if [ ! -z $keyword ] # not empthy 
+		then : # 
+			echo '=========== [start] ==========='
+			search_function $keyword;
+			echo '============ [end] ============'	
+		else : # $1 was not given 
+			echo '=========== [start] ==========='
+			list_bash_functions 
+			echo '============ [end] ============'		
+	fi
+ 
+}
+
+function where_is_function(){
+	keyword="$1"
+	seek $keyword
+}
+
+#
+#		read -r -p "keyword for list_bash_functions [e.g. read] (enter nothing to list ALL) : "  word_to_search
+#		# echo $word_to_search
+#		
+#		if [ "$word_to_search" = '' ]
+#		then
+#			compgen -A function # list_bash_functions
+#		else
+#			compgen -A function | grep $word_to_search
+#		fi
+
 
 function clr(){
 	echo -en '\033c';
