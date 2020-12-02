@@ -75,6 +75,9 @@ function git_apply_patch (){
 	git diff	
 }
 
+function git_name () {
+	basename `git rev-parse --show-toplevel`
+}
 
 function git_resynch() {
 	git fetch
