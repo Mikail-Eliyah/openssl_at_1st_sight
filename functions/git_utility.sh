@@ -166,7 +166,6 @@ function git_main() {
     else
 		default_action;
     fi
-}	
 	
 }
 
