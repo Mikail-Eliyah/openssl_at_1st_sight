@@ -1,9 +1,10 @@
 
-
 function git_commit_and_push_to_main (){
-	comment="$1"
+	git add .; git status	
 	
-	git add .; git status
+	read -r -p "comments [e.g. updated: / added:] : "  comments
+	
+	#comment="$1"
 	git commit -am "$comment"
 	git push -u origin master
 }
@@ -122,8 +123,7 @@ function git_main() {
 	echo ""
 	
     if [ "$git_menu_input" = "1" ]; then
-		read -r -p "comments [e.g. updated: / added:] : "  comments
-		
+		#		
 		git_commit_and_push_to_main $comments;
     elif [ "$git_menu_input" = "2" ]; then
 		git_show_line_index_by_ID; #$id; 	
@@ -164,7 +164,7 @@ function git_main() {
     elif [ "$git_menu_input" = "x" -o "$git_menu_input" = "X" ];then # -o := `or` and `||`
 		exit_program;
     else
-		default_action;
+		git_main_default_action;
     fi
 	
 }
@@ -192,12 +192,8 @@ function git_menu() {
   get_timestamp
 }
 
-function exit_program() {
-	printf "\n quit.\n"
-	echo 'X' : quitprogram
-}
 
-function default_action() {
+function git_main_default_action() {
     echo "You have entered an invallid selection!"
     echo "Please try again!"
     echo ""

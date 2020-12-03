@@ -143,3 +143,8 @@ function refresh_bashrc(){
 	eval ". "$HOME"/.bashrc"
 }
 
+
+function exit_program() {
+	printf "\n quit.\n"
+	echo 'X' : quitprogram
+}
