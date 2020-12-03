@@ -152,7 +152,7 @@ function git_main() {
     elif [ "$git_menu_input" = "11" ];then
 		read -r -p "hash_id [e.g. from git log] : "  hash_id
 		
-		git_display_commit;
+		git_display_commit $hash_id;
     elif [ "$git_menu_input" = "12" ];then	
 		git_create_patch;
     elif [ "$git_menu_input" = "13" ];then	
