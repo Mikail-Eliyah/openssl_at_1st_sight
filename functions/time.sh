@@ -218,13 +218,26 @@ function check_time_diff_example() {
 	fi	
 }
 
+function now_profile {
+	now;
+	date +20"%y"-"%m"."%d"_"%T"hr
+	date +"%Y"-"%m"."%d"_"%H%M"hr
+	date +"%Y"-"%m"."%d"_"%H%M_%S_%N"hr
+	echo ""
+	echo "Year: " $(date '+%Y')
+	echo "Month: " $(date '+%m     (%b)')
+	echo "Day: " $(date	'+%d     (%A)')
+	echo "Hour: " $(date	'+%H')
+	echo "Minute: " $(date	'+%M')
+	echo "Second: " $(date	'+%S')
+	echo "Nano-second: " $(date	'+%N')
+}
+
 : '
 $ date -d "Jan  01, 1970  12:00:00 AM GMT" +%s
 0
 $ date -d @"0" "+%Y-%m-%d_%H%Mhr:%S sec"
 1969-12-31_1612hr:00 sec
-
-
 '
 # date -d @Epoch
 # date -d @1268727836

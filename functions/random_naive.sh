@@ -9,6 +9,11 @@ function generate_random_hex(){
 	number_of_bytes=16
 	number_of_bytes="$1"
 	
+	# head -c $number_of_bytes /dev/urandom | LC_CTYPE=C tr '\n' = | xxd -p | tr -d '\n'
+	
+	#  head -c $number_of_bytes /dev/urandom | LC_CTYPE=C tr '\n' = | hexdump -e '"%x"'
+	# head -c $number_of_bytes /dev/urandom | LC_CTYPE=C tr '\n' = | xxd -p 
+
 	openssl rand -hex $number_of_bytes
 	# openssl rand -out <outout_file> -hex 
 	# openssl rand -engine /dev/crypt0 -hex 20
