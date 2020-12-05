@@ -4,8 +4,8 @@ function git_commit_and_push_to_main (){
 	
 	read -r -p "comments [e.g. updated: / added:] : "  comments
 	
-	#comment="$1"
-	git commit -am "$comment"
+	#comments="$1"
+	git commit -am "$comments"
 	git push -u origin master
 }
 
@@ -124,7 +124,7 @@ function git_main() {
 	
     if [ "$git_menu_input" = "1" ]; then
 		#		
-		git_commit_and_push_to_main $comments;
+		git_commit_and_push_to_main # $comments;
     elif [ "$git_menu_input" = "2" ]; then
 		git_show_line_index_by_ID; #$id; 	
 	elif [ "$git_menu_input" = "3" ]; then
@@ -160,9 +160,10 @@ function git_main() {
 		read -r -p "Apply path_file [] : "  path_file
 		
 		git_apply_patch;		
-		
+    elif [ "$git_menu_input" = "c" ];then
+		./connect.sh
     elif [ "$git_menu_input" = "x" -o "$git_menu_input" = "X" ];then # -o := `or` and `||`
-		exit_program;
+		exit_program_for_menu;
     else
 		git_main_default_action;
     fi
@@ -183,7 +184,7 @@ function git_menu() {
   echo "11: git_display_commit <commit_ID>"
   echo "12: git_create_patch"
   echo "13: git_apply_patch"
-
+  echo "c: git_connect"
   echo ""
   echo "'x' or 'X' to exit the script"
   
@@ -191,7 +192,6 @@ function git_menu() {
   date +%s
   get_timestamp
 }
-
 
 function git_main_default_action() {
     echo "You have entered an invallid selection!"

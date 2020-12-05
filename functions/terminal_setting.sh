@@ -144,7 +144,7 @@ function refresh_bashrc(){
 }
 
 
-function exit_program() {
+function exit_program_for_menu() {
 	printf "\n quit.\n"
 	echo 'X' : quitprogram
 }
