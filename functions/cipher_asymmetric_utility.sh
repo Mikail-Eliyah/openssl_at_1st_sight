@@ -1,6 +1,6 @@
 #!/bin/bash
 #dos2unix "./parameters.sh"
-source "./parameters.sh"
+source $HOME"/scripts/parameters.sh" 
 #dos2unix "./keys.sh"
 source "./keys.sh"
 

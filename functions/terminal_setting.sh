@@ -108,7 +108,7 @@ function replay_command() {
 }
 
 function open_dir_given_path () {
-	destination_path"$1" # "C:\Ursa\...\Gaia"
+	destination_path="$1" # "C:\Ursa\...\Gaia"
 	# eval ". $(HOME)/.bashrc"
 	# eval ". ~/.bashrc"
 	cd ${destination_path}

@@ -1,5 +1,5 @@
 #!/bin/bash
-source $HOME"/parameters.sh" 
+source $HOME"/scripts/parameters.sh" 
 # function pack_n_sha { get_timestamp ; tar -cvzf "$1"_$time_stamp.tar .; sha256_result=$(openssl dgst -$hash_algo "$1"_$time_stamp.tar); echo $sha256_result; }
 
 function hash_message(){

@@ -233,6 +233,15 @@ function now_profile {
 	echo "Nano-second: " $(date	'+%N')
 }
 
+function get_time_tag(){
+	grep -o "Day[ ]*[0-9]*[ ]*:[ ]*[\[][0-9]\{4\}-[0-9]\{2\}[.]\{1\}[0-9]\{2\}[]][ ]*[(][ ]*[A-Za-z]\{1,5\}day[ ]*[)]"
+# e.g.
+#$ echo 'Day   39:      [12.06] (Sunday)    ursa sees the world' | grep -o "Day[ ]*[0-9]\{2\}[ ]*:[ ]*[\[][0-9]\{2\}[.]\{1\}[0-9]\{2\}[]][ ]*[(][ ]*[A-Za-z]\{1,5\}day[ ]*[)]"
+#$ echo 'Day   1139:      [1911-01.11] (Sunday)   ursa sees the world' | grep -o "Day[ ]*[0-9]\{1,5\}[ ]*:[ ]*[\[][0-9]\{4\}-[0-9]\{2\}[.]\{1\}[0-9]\{2\}[]][ ]*[(][ ]*[A-Za-z]\{1,5\}day[ ]*[)]"
+#$ echo 'Day   1139:      [1911-01.11] (Sunday)   ursa sees the world' | grep -o "Day[ ]*[0-9]*[ ]*:[ ]*[\[][0-9]\{4\}-[0-9]\{2\}[.]\{1\}[0-9]\{2\}[]][ ]*[(][ ]*[A-Za-z]\{1,5\}day[ ]*[)]"
+
+}
+
 : '
 $ date -d "Jan  01, 1970  12:00:00 AM GMT" +%s
 0

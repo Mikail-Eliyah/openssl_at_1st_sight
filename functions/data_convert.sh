@@ -128,6 +128,12 @@ function decimal_to_ascii(){
 	echo $ascii_str	
 }
 
+function binary_file_to_hex (){
+	file_binary="$1"
+	cat $file_binary | xxd -p | tr -d "\n" 
+}
+
+
 echo ""
 : <<'NOTE_BLOCK'
 #

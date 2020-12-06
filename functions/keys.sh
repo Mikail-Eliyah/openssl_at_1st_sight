@@ -1,6 +1,6 @@
 #!/bin/sh
 #dos2unix "./parameters.sh"
-source $HOME"/parameters.sh" 
+source $HOME"/scripts/parameters.sh" 
 
 function retrieve_key_from_key_file(){
 	filename=$key_file

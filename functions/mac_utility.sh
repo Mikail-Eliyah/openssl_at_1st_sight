@@ -1,6 +1,6 @@
 #!/bin/bash
 #dos2unix "./parameters.sh"
-source $HOME"/parameters.sh" 
+source $HOME"/scripts/parameters.sh"
 
 function hmac_message(){
 	get_key_for_authentication;
