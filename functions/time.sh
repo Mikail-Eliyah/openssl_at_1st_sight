@@ -233,6 +233,34 @@ function now_profile {
 	echo "Nano-second: " $(date	'+%N')
 }
 
+function get_time_profile {
+	#date -d "1974-01-04" # Fri, Jan  4, 1974 12:00:00 AM
+	
+	read -p "time_input_format (e.g. 1974-01-04T20:20:20):" time_input_format	
+
+	time_in_readable_format=$(date -d "$time_input_format")
+	#echo $time_in_readable_format
+	time_in_epoch=$(get_time_in_epoch "$time_in_readable_format")
+	
+	time_formatted=$(date -d @"$time_in_epoch" "+%Y-%m-%d_%H%Mhr:%S sec")
+	
+	#echo $time_formatted
+
+	date -d @"$time_in_epoch" "+%Y-%m-%d_%H%Mhr:%S sec _%T"hr
+	echo ""
+	date -d @"$time_in_epoch" +"%Y"-"%m"."%d"_"%H%M"hr
+	date -d @"$time_in_epoch" +"%Y"-"%m"."%d"_"%H%M_%S_%N"hr
+	echo ""
+	echo "Year: " $(date -d @"$time_in_epoch"  '+%Y')
+	echo "Month: " $(date  -d @"$time_in_epoch" '+%m     (%b)')
+	echo "Day: " $(date	-d @"$time_in_epoch"  '+%d     (%A)')
+	echo "Hour: " $(date	-d @"$time_in_epoch" '+%H')
+	echo "Minute: " $(date	-d @"$time_in_epoch" '+%M')
+	echo "Second: " $(date	-d @"$time_in_epoch" '+%S')
+	echo "Nano-second: " $(date	-d @"$time_in_epoch" '+%N')
+}
+
+
 function get_time_tag(){
 	grep -o "Day[ ]*[0-9]*[ ]*:[ ]*[\[][0-9]\{4\}-[0-9]\{2\}[.]\{1\}[0-9]\{2\}[]][ ]*[(][ ]*[A-Za-z]\{1,5\}day[ ]*[)]"
 # e.g.
