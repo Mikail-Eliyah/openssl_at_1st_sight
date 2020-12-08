@@ -115,6 +115,16 @@ function open_dir_given_path () {
 	eval "opendir"
 }
 
+#$ gnome-open .
+#or
+#$ nautilus .
+
+# cygwin 
+#alias nwin=”cygstart /bin/bash -li” # “mintty.exe -i /Cygwin-Terminal.ico - &”
+
+# ubuntu
+#alias nwin=”gnome-terminal”
+
 function get_bash_version () {
 	#N=10
 		
