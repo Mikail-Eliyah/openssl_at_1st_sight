@@ -6,7 +6,8 @@ function git_commit_and_push_to_main (){
 	
 	#comments="$1"
 	git commit -am "$comments"
-	git push -u origin master
+	git push -u origin master # git push origin master # git push -u origin master
+	# git push -uf origin master # force
 }
 
 # check which repo in Github
@@ -108,6 +109,16 @@ function git_resynch() {
 	git rebase origin/master
 }
 
+function git_review_changes() {
+	echo "Review Changes:"
+	echo "# diff files between local and remote #"
+	git diff		# diff shows '+' sign before lines, which are newly added and '−' for deleted lines.
+}
+
+function git_config_review(){
+	echo "# check settings"
+	git config --list
+}
 
 function git_test_connection(){
 	ssh -T git@github.com;
@@ -136,32 +147,36 @@ function git_main() {
     elif [ "$git_menu_input" = "6" ];then
 		git_name;
     elif [ "$git_menu_input" = "7" ];then
-		git_resynch;
+		git_review_changes;
     elif [ "$git_menu_input" = "8" ];then
+		git_resynch;
+    elif [ "$git_menu_input" = "9" ];then
 		git_test_connection;
-	elif [ "$git_menu_input" = "9" ];then		
+	elif [ "$git_menu_input" = "10" ];then		
 		read -r -p "file_name [e.g. ./read.me:] : "  file_name
 			
 		read -r -p "comments [e.g. reason for file removal:] : "  comments
 	
 		git_remove_file;
 
-    elif [ "$git_menu_input" = "10" ];then	
+    elif [ "$git_menu_input" = "11" ];then	
 		git_get_github_url;
 
-    elif [ "$git_menu_input" = "11" ];then
+    elif [ "$git_menu_input" = "12" ];then
 		read -r -p "hash_id [e.g. from git log] : "  hash_id
 		
 		git_display_commit $hash_id;
-    elif [ "$git_menu_input" = "12" ];then	
-		git_create_patch;
     elif [ "$git_menu_input" = "13" ];then	
+		git_create_patch;
+    elif [ "$git_menu_input" = "14" ];then	
 		ls;
 		read -r -p "Apply path_file [] : "  path_file
 		
 		git_apply_patch;		
     elif [ "$git_menu_input" = "c" ];then
 		./connect.sh
+    elif [ "$git_menu_input" = "v" ];then		
+		git_config_review;
     elif [ "$git_menu_input" = "x" -o "$git_menu_input" = "X" ];then # -o := `or` and `||`
 		exit_program_for_menu;
     else
@@ -177,14 +192,16 @@ function git_menu() {
   echo "4 : git_which_repo"  
   echo "5 : git_search_by_ID"
   echo "6 : git_name"
-  echo "7 : git_resynch"
-  echo "8 : git_test_connection"  
-  echo "9 : git_remove_file"  
-  echo "10: git_get_github_url"    
-  echo "11: git_display_commit <commit_ID>"
-  echo "12: git_create_patch"
-  echo "13: git_apply_patch"
+  echo "7 : git_review_changes" 
+  echo "8 : git_resynch"
+  echo "9 : git_test_connection"  
+  echo "10 : git_remove_file"  
+  echo "11: git_get_github_url"    
+  echo "12: git_display_commit <commit_ID>"
+  echo "13: git_create_patch"
+  echo "14: git_apply_patch"
   echo "c: git_connect"
+  echo "v: git_config_review"  
   echo ""
   echo "'x' or 'X' to exit the script"
   
@@ -209,4 +226,15 @@ function git_main_default_action() {
 # Make Git store the username and password and it will never ask for them.
 # git config --global credential.helper store
 # git config --global credential.helper 'cache --timeout=600'
+
+# Different Platforms: Linux and Mac OS uses line-feed (LF), or new line as line ending character
+# Windows uses line-feed and carriage-return (LFCR) combination to represent the line-ending character.
+# To avoid unnecessary commits because of these line-ending differences, configure Git client to write the same line ending to the Git repository.
+# Windows system: configure Git client to convert line endings to CRLF format while checking out, and convert them back to LF format during the commit operation. 
+#git config --global core.autocrlf true
+
+
+# GNU/Linux or Mac OS, configure Git client to convert line endings from CRLF to LF while performing the checkout operation.
+#git config --global core.autocrlf input
+
 
