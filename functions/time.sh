@@ -14,7 +14,8 @@ function get_timestamp {
 function get_time_in_epoch () {
 	date_formatted=''
 	# date_formatted=$(date) # e.g. Tue, Apr 21, 2020 2:10:31 AM
-	if [ "$1" == '' ]
+	echo "$1"
+	if [ -z "$1" ]
 		then
 			read -p "date_formatted (e.g. Tue, Apr 21, 2020 2:10:31 AM):" date_formatted
 		else
@@ -32,24 +33,30 @@ function get_time_in_epoch () {
 function check_date_expiry_via_input_prompt () {
 	# date_formatted=$(date) # e.g. Tue, Apr 21, 2020 2:10:31 AM
 	date_formatted=''
-	read -p "date_formatted (e.g. Tue, Apr 21, 2020 2:10:31 AM or 06/12/2012 07:21:22):" date_formatted
+	read -p "To check: date_formatted (e.g. Tue, Apr 21, 2020 2:10:31 AM or 06/12/2012 07:21:22):" date_formatted
 	date_in_epoch_format=$(date -d "$date_formatted" +"%s") # date -d "$date_formatted" +"%s"
-	date_in_epoch_format_00="$(get_time_in_epoch)"
+	date_in_epoch_format_00="$(get_time_in_epoch "$date_in_epoch_format")"
 	#get_time_in_epoch;
 	#date_in_epoch_format_00=$?
 	date_formatted='' 
 	
-	read -p "date_formatted (e.g. Tue, Apr 22, 2020 2:10:31 AM or 06/31/2012 07:21:22):" date_formatted	# if this date is later, it should be valid, else, expired
+	read -p "Expiry: date_formatted (e.g. Tue, Apr 22, 2020 2:10:31 AM or 06/31/2012 07:21:22):" date_formatted	# if this date is later, it should be valid, else, expired
 	date_in_epoch_format=$(date -d "$date_formatted" +"%s") # date -d "$date_formatted" +"%s"
-	date_in_epoch_format_01="$(get_time_in_epoch)"
+	date_in_epoch_format_01="$(get_time_in_epoch "$date_in_epoch_format")"
 	#get_time_in_epoch;
 	#date_in_epoch_format_01=$?
 	
 	if [ "$date_in_epoch_format_01" -ge "$date_in_epoch_format_00" ];
 	then
 		echo "VALID"
+		time_left_secs=$(( $date_in_epoch_format_01-$date_in_epoch_format_00 ))
+		echo "time_left_secs: " $time_left_secs
+		echo "or " $(get_time_left $time_left_secs)
 	else
 		echo "EXPIRED"
+		time_over_secs=$(( $date_in_epoch_format_00-$date_in_epoch_format_01 ))
+		echo "time_over_secs: " $time_over_secs
+		echo "or " $(get_time_left $time_over_secs)
 	fi
 
 }
@@ -170,6 +177,7 @@ function get_time_elapsed(){
 	time_elapsed_secs_float=$(echo "$time_elapsed_milisecs 1000" | awk '{printf "%.3f \n", $1/$2}')
 	echo 'time_elapsed_secs: ' $time_elapsed_secs_float
 	
+	echo 'time_elapsed: ' $( get_time_left $time_elapsed_secs_float)
 }
 
 function check_time_diff_example() {
@@ -269,6 +277,33 @@ function get_time_tag(){
 #$ echo 'Day   1139:      [1911-01.11] (Sunday)   ursa sees the world' | grep -o "Day[ ]*[0-9]*[ ]*:[ ]*[\[][0-9]\{4\}-[0-9]\{2\}[.]\{1\}[0-9]\{2\}[]][ ]*[(][ ]*[A-Za-z]\{1,5\}day[ ]*[)]"
 
 }
+
+# $ get_time_left 31276801
+# 11 months 2 days and 1 seconds
+# $ get_time_left 62647201
+# 1 years 23 months 5 days 2 hours and 1 seconds
+function get_time_left {
+  local T=$1
+  
+  local Y=$((T/60/60/24/365)) # 
+  #local mth=$((T/60/60/24/365%12)) #
+  #local mth=$((T/60/60/24/31%31))
+  #local D=$((T/60/60/24%24)) # %24))
+  local D=$((T/60/60/24%365))
+  local H=$((T/60/60%24))
+  local M=$((T/60%60))
+  local S=$((T%60))
+  
+  (( $Y > 0 )) && printf '%d years ' $Y
+  #(( $mth > 0 )) && printf '%d months ' $mth
+  (( $D > 0 )) && printf '%d days ' $D
+  (( $H > 0 )) && printf '%d hours ' $H
+  (( $M > 0 )) && printf '%d minutes ' $M
+  (( $D > 0 || $H > 0 || $M > 0 )) && printf 'and '
+  printf '%d seconds\n' $S
+
+}
+
 
 : '
 $ date -d "Jan  01, 1970  12:00:00 AM GMT" +%s
