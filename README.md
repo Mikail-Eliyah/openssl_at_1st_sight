@@ -289,5 +289,4 @@ $ list_bash_functions_enumerated
    262  write_passcode_plaintext_to_file
    263  zip_file
    264  zip_folder
-
 </PRE>
