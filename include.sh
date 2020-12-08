@@ -29,10 +29,10 @@ source $HOME"/scripts/functions/time.sh"
 source $HOME"/scripts/functions/serial.sh"
 source $HOME"/scripts/functions/view.sh"
 #
-source $HOME"/scripts/functions/system.sh"
+source $HOME"/scripts/functions/environment_setting.sh"
 source $HOME"/scripts/functions/display.sh"
 #
-source $HOME"/scripts/functions/terminal_setting.sh"
+source $HOME"/scripts/functions/shell_setting.sh"
 #
 #dos2unix $number_of_levels_up"scripts/functions/data_convert.sh"
 source $HOME"/scripts/functions/data_convert.sh"

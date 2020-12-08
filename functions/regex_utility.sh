@@ -122,4 +122,13 @@ function find_lines_containing_str () {
 	echo "number_of_lines_found: " $number_of_lines_found
 }
 
+function change_upper_to_lower_case (){
+	str="$1"
+	echo $str | tr '[:upper:]' '[:lower:]'
+}
+
+function change_lower_to_upper_case (){
+	str="$1"
+	echo $str | tr '[:lower:]' '[:upper:]'
+}
 

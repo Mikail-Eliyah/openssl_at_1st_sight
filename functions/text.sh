@@ -17,34 +17,6 @@ function remove_spaces {
 	echo $var
 }
 
-function seek { 
-	if [ "$1" == "" ] # not specified 
-	then
-		echo 'Search key word required'
-		echo "Usage : $0 seek $1"
-	else
-		GREP_COLORS='ms=01;32' egrep -inr --color=always $1;
-	fi;
-
-	time_stamp=$(date +"%Y-%m-%d_%H%Mhr_%S"sec) ; 
-	
-	echo $time_stamp; 
-}
-
-# $ seek $key_word_00 | seek_further $key_word_01 | seek_further $key_word_02 ...
-function seek_further { 
-	if [ "$1" == "" ] # not specified 
-	then
-		echo 'Search key word required'
-		echo "Usage : $0 seek $1"
-	else
-		GREP_COLORS='ms=01;36' egrep -i --color=always $1;
-	fi;
-
-	time_stamp=$(date +"%Y-%m-%d_%H%Mhr_%S"sec) ; 
-	
-	echo $time_stamp; 
-}
 
 function remove_prefix { 
 	target_str="$1"

@@ -2,6 +2,17 @@
 
 alias now="date '+%Y-%m(%b).%d(%A)_%Hhr:%Mmin:%Ssec:%Nns'"
 
+function show_timestamp(){
+	#source "./scripts/time.sh"
+	printf "\n"
+    get_timestamp;
+			
+	#source "./scripts/data_convert.sh"
+	seed="Hi There"
+	ans=$(ascii_to_hex "$seed")
+	echo $ans
+}
+
 function get_timestamp {
 	# now=$(date '+%Y-%m(%b).%d(%A)_%Hhr:%Mmin:%Ssec:%Nns')
 	#echo $now
@@ -33,14 +44,14 @@ function get_time_in_epoch () {
 function check_date_expiry_via_input_prompt () {
 	# date_formatted=$(date) # e.g. Tue, Apr 21, 2020 2:10:31 AM
 	date_formatted=''
-	read -p "To check: date_formatted (e.g. Tue, Apr 21, 2020 2:10:31 AM or 06/12/2012 07:21:22):" date_formatted
+	read -p "To check: date_formatted (e.g. Tue, Apr 21, 2020 2:10:31 AM or 06/12/2012 07:21:22 or 1974-01-04T20:20:20):" date_formatted
 	date_in_epoch_format=$(date -d "$date_formatted" +"%s") # date -d "$date_formatted" +"%s"
 	date_in_epoch_format_00="$(get_time_in_epoch "$date_in_epoch_format")"
 	#get_time_in_epoch;
 	#date_in_epoch_format_00=$?
 	date_formatted='' 
 	
-	read -p "Expiry: date_formatted (e.g. Tue, Apr 22, 2020 2:10:31 AM or 06/31/2012 07:21:22):" date_formatted	# if this date is later, it should be valid, else, expired
+	read -p "Expiry: date_formatted (e.g. Tue, Apr 22, 2020 2:10:31 AM or 06/31/2012 07:21:22 or 1974-01-04T20:20:20):" date_formatted	# if this date is later, it should be valid, else, expired
 	date_in_epoch_format=$(date -d "$date_formatted" +"%s") # date -d "$date_formatted" +"%s"
 	date_in_epoch_format_01="$(get_time_in_epoch "$date_in_epoch_format")"
 	#get_time_in_epoch;

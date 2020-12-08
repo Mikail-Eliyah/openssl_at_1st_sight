@@ -18,10 +18,39 @@ function list_bash_functions_enumerated() {
 	list_bash_functions | grep -v gawk | cat -n
 }
 
-
 function search_function () {
 	keyword="$1"
 	list_bash_functions | seek_further $keyword
+}
+
+function seek { 
+	if [ "$1" == "" ] # not specified 
+	then
+		echo 'Search key word required'
+		echo "Usage : $0 seek $1"
+	else
+		echo $1
+		GREP_COLORS='ms=01;32' egrep -inr --color=always $1 $2; # $2 := path_start
+	fi;
+
+	time_stamp=$(date +"%Y-%m-%d_%H%Mhr_%S"sec) ; 
+	
+	echo $time_stamp; 
+}
+
+# $ seek $key_word_00 | seek_further $key_word_01 | seek_further $key_word_02 ...
+function seek_further { 
+	if [ "$1" == "" ] # not specified 
+	then
+		echo 'Search key word required'
+		echo "Usage : $0 seek $1"
+	else
+		GREP_COLORS='ms=01;36' egrep -i --color=always $1;
+	fi;
+
+	time_stamp=$(date +"%Y-%m-%d_%H%Mhr_%S"sec) ; 
+	
+	echo $time_stamp; 
 }
 
 function find_bash_function_in_list(){
@@ -42,8 +71,10 @@ function find_bash_function_in_list(){
 
 function where_is_function(){
 	keyword="$1"
-	seek $keyword
+	path_start=$HOME'/scripts/functions/'
+	seek $keyword  $path_start
 }
+
 
 #
 #		read -r -p "keyword for list_bash_functions [e.g. read] (enter nothing to list ALL) : "  word_to_search
@@ -136,6 +167,45 @@ function get_bash_version () {
 	echo "Home path: $HOME"
 }
 
+function count_parameters(){
+	printf "Hello, $USER.\n\n"
+	printf "There are "$#" arguments.\n"
+	#input_length=20
+	#read  -n $input_length -p "Input arguments:" arguments 
+	echo ""
+	demarcator="===================================================="
+	# handle > 10 parameters in shell
+	# can have up to ${255}
+	# Use curly braces to set them off:
+	# echo "${10}"
+	printf "\n $demarcator \n"	
+	# iterate over the positional parameters
+	# for arg
+	printf "\n $demarcator \n"			
+	# for arg in "$@"
+	printf "\n $demarcator \n"			
+	#or
+	while (( $# > 0 )) # or [ $# -gt 0 ] 
+	do 
+		echo "$1" 
+		shift 
+	done
+	printf "\n $demarcator \n"	
+}
+
+function show_latest_command_and_argument_history () {
+	echo "[show_latest_command_and_argument_history]"
+	echo "latest command: " 
+	echo "type '!!'"
+	echo "latest argument: " 
+	echo "type '!$'"
+}
+
+function clean_all_openssl_processes () {
+	kill -9 $(ps aux | grep -e openssl | awk '{ print $2 }')
+	rm -rf ./messages/msg.txt.*
+}
+
 function clr_history () {
 	# Clear all previous history using option -c
 	history -c
@@ -152,7 +222,6 @@ function refresh_bashrc(){
 	echo $time_stamp; 
 	eval ". "$HOME"/.bashrc"
 }
-
 
 function exit_program_for_menu() {
 	printf "\n quit.\n"
