@@ -1,5 +1,4 @@
 # OpenSSL At 1st Sight
-
 <PRE>
 # source 
 # $ ~/.bashrc
