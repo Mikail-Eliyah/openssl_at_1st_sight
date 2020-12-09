@@ -41,21 +41,52 @@ function get_time_in_epoch () {
 	return $ANS
 }
 
+# Usage: check_time_diff "1974-01-04T20:20:20" "1975-01-04T20:20:20"
+function check_time_diff () {
+	date_formatted=''
+	date_formatted="$1" # e.g. "1974-01-04T20:20:20"
+	date_in_epoch_format=$(date -d "$date_formatted" +"%s") # date -d "$date_formatted" +"%s"
+	#date_in_epoch_format_00="$(get_time_in_epoch "$date_in_epoch_format")"
+	date_in_epoch_format_00=$date_in_epoch_format
+
+	date_formatted="$2" # 1975-01-04T20:20:20	
+	date_in_epoch_format=$(date -d "$date_formatted" +"%s") # date -d "$date_formatted" +"%s"
+	#date_in_epoch_format_01="$(get_time_in_epoch "$date_in_epoch_format")"
+	date_in_epoch_format_01=$date_in_epoch_format
+	
+	if [ "$date_in_epoch_format_01" -ge "$date_in_epoch_format_00" ];
+	then
+		echo "Time "$2" is after Time "$1""
+		time_left_secs=$(( $date_in_epoch_format_01-$date_in_epoch_format_00 ))
+		echo "time_left_secs: " $time_left_secs
+		echo "or " $(get_time_left $time_left_secs)
+	else
+		echo "Time "$1" is after Time "$2""
+		time_over_secs=$(( $date_in_epoch_format_00-$date_in_epoch_format_01 ))
+		echo "time_over_secs: " $time_over_secs
+		echo "or " $(get_time_left $time_over_secs)
+	fi
+
+}
+
+
 function check_date_expiry_via_input_prompt () {
 	# date_formatted=$(date) # e.g. Tue, Apr 21, 2020 2:10:31 AM
 	date_formatted=''
 	read -p "To check: date_formatted (e.g. Tue, Apr 21, 2020 2:10:31 AM or 06/12/2012 07:21:22 or 1974-01-04T20:20:20):" date_formatted
 	date_in_epoch_format=$(date -d "$date_formatted" +"%s") # date -d "$date_formatted" +"%s"
-	date_in_epoch_format_00="$(get_time_in_epoch "$date_in_epoch_format")"
+	#date_in_epoch_format_00="$(get_time_in_epoch "$date_in_epoch_format")"
 	#get_time_in_epoch;
 	#date_in_epoch_format_00=$?
+	date_in_epoch_format_00=$date_in_epoch_format
 	date_formatted='' 
 	
 	read -p "Expiry: date_formatted (e.g. Tue, Apr 22, 2020 2:10:31 AM or 06/31/2012 07:21:22 or 1974-01-04T20:20:20):" date_formatted	# if this date is later, it should be valid, else, expired
 	date_in_epoch_format=$(date -d "$date_formatted" +"%s") # date -d "$date_formatted" +"%s"
-	date_in_epoch_format_01="$(get_time_in_epoch "$date_in_epoch_format")"
+	#date_in_epoch_format_01="$(get_time_in_epoch "$date_in_epoch_format")"
 	#get_time_in_epoch;
 	#date_in_epoch_format_01=$?
+	date_in_epoch_format_01=$date_in_epoch_format
 	
 	if [ "$date_in_epoch_format_01" -ge "$date_in_epoch_format_00" ];
 	then
