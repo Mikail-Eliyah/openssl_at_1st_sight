@@ -107,14 +107,25 @@ function git_display_commit () {
 }
 
 function git_resynch() {
-	git fetch
-	git rebase origin/master
+	#git fetch # tells local git to retrieve the latest meta-data info from the original (yet doesn’t do any file transferring. just checking to see if there are any changes available).
+	#git rebase origin/master
+	echo 'Fetch Latest Changes: synchronize local repository with remote'
+	git pull
+	git log
 }
 
 function git_review_changes() {
 	echo "Review Changes:"
 	echo "# diff files between local and remote #"
 	git diff		# diff shows '+' sign before lines, which are newly added and '−' for deleted lines.
+}
+
+function git_review_latest_N_commits() {
+	echo "Usage: git_review_latest_N_commits N"
+	git log -"$1"
+	echo ""
+	echo "At local:"
+	cat .git/refs/heads/master
 }
 
 function git_config_review(){
@@ -190,7 +201,8 @@ function git_main() {
 function git_view_all_bramches() {
 	git branch
 	echo ""
-	echo "to switch branches: git branch <branch_name>"
+	echo "to switch branches (create or switch if exist): git branch <branch_name>"
+	echo "to switch branches (switch if exist): git checkout <branch_name>"	
 }
 
 function git_menu() {
