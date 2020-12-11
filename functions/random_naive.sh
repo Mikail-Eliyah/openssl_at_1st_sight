@@ -25,8 +25,8 @@ function generate_random_hex(){
 function get_random_integer() {
 	bound_lower=${1:-0}  # default value: 0
 	bound_upper=${2:-10}  # default value: 10
-	
-	echo "random_element = random [$bound_lower, $bound_upper]"
+	# shuf -i $bound_lower-$bound_upper -n 1
+	# echo "random_element = random [$bound_lower, $bound_upper]"
 	bound_upper=$((bound_upper+1))
 	# random [bound_lower, bound_upper]
 	random_element=$(echo $(($bound_lower + RANDOM % $bound_upper)))
@@ -49,7 +49,8 @@ function seed_random_with_pid() {
 }
 
 function generate_random_text() {
-	text_random=$(cat /dev/urandom | tr -dc  tr -dc '"a-zA-Z 0-9~`@#$%^&*()_+=-{}[]|\:;<>,./?\\' | fold -w $number_of_characters | head -n 1)
+	number_of_characters="$1"
+	text_random=$(cat /dev/urandom | tr -dc '"a-zA-Z 0-9~`@#$%^&*()_+=-{}[]|\:;<>,./?\\' | fold -w $number_of_characters | head -n 1)
 	
 	echo $text_random
 }

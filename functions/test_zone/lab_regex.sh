@@ -36,10 +36,6 @@ function remove_html_tags_in_file(){
 	sed 's/<[^>]*>//g' $file_in > $file_out
 }
 
-function add_line_index_to_file(){
-	cat -n $file_in > $file_out
-}
-
 function remove_fields_in_file(){
 	start_open='<'
 	end_close='>'
