@@ -19,6 +19,12 @@ function git_conflict_resolution_advisory (){
 	git diff
 	
 	likely changes of same function by different people, Git is in a state of confusion and it asks the user to resolve the conflict manually before pulling to deter code collisions. 
+	
+	When multiple developers work on a single remote repo, you cannot modify the order of the commits in the remote repository. In this situation, you can use rebase operation to put your local commits on top of the remote repo commits and you can push these changes.
+
+	// adds GitHub repo URL as a remote origin and pushes changes to remote repo.
+	git remote add origin https://github.com/<user_id>/<user_repo>.git
+	git push -u origin master
 
 	"
 }
@@ -277,4 +283,5 @@ function git_main_default_action() {
 
 # GNU/Linux or Mac OS, configure Git client to convert line endings from CRLF to LF while performing the checkout operation.
 #git config --global core.autocrlf input
+
 

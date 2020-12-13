@@ -12,6 +12,50 @@ function grep_fields_with_different_start_and_end_labels (){
 	find $path_start -regex ".*\.\($file_type\)" -type f -exec awk '/'$label_start'/,/'$label_end'/ {print FILENAME ":" FNR ":" $0}' {} \; | sed -e 's/'$label_start'/ /g' | sed -e 's/'$label_end'/ /g'
 }
 
+function grep_starting_with (){
+	pattern="$1"
+	
+	if [ "$1" == '-h' ]; then
+		echo "
+		grep '^'$pattern --color
+		e.g. $ list_bash_functions | grep '^v' --color # starts with 
+		"
+	fi
+	
+	grep '^'$pattern --color
+
+}
+
+function grep_containing (){
+	pattern="$1"
+	
+	if [ "$1" == '-h' ]; then
+		echo "
+		grep $pattern --color
+		e.g. 
+		$ list_bash_functions | grep '[*sa]' --color # contains
+		$ list_bash_functions | grep 'in[dat]' --color # contains a or d or t
+		$ list_bash_functions | grep 'win' --color # matches
+		$ list_bash_functions | grep '.in' --color
+		"
+	fi
+	
+	grep $pattern --color
+}
+
+function grep_ending_with (){
+	pattern="$1"
+	
+	if [ "$1" == '-h' ]; then
+		echo "
+		grep $pattern'$' --color
+		e.g. $ list_bash_functions | grep 'x$' --color # ends with
+		"
+	fi
+	
+	grep $pattern'$' --color
+}
+
 #"
 #find . -type f -exec awk '/<parameter>/,/<\/parameter>/' {} \; | sed -e 's/<[^>]*>//g'
 #find . -regex ".*\.\(py\)" -type f -exec awk '/<parameter>/,/<\/parameter>/' {} \; | sed -e 's/<[^>]*>//g'
