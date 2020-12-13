@@ -5,17 +5,14 @@
 # $ chmod +x main.sh
 
 # recommended to have this in .bashrc
-source $HOME"/include.sh"
+source $HOME"/scripts/include.sh"    
 
 alias main="date; now; echo 'Activating [ MAIN ]'; ./main.sh;"
 alias py="echo "============================="; date; now; echo "============================="; python"
 alias py3="echo "============================="; date; now; echo "============================="; python3"
 
-alias reload_bashrc="dos2unix ./scripts/*.sh; . ~/.bashrc"
+alias reload_bashrc="dos2unix $HOME/scripts/*.sh; . ~/.bashrc"
 # alias reload_bashrc=". ~/.bash_profile" # mac
-
-alias list_bash_functions="compgen -A function" 
-
 
 </PRE>
 
