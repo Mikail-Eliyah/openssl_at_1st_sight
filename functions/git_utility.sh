@@ -278,4 +278,3 @@ function git_main_default_action() {
 # GNU/Linux or Mac OS, configure Git client to convert line endings from CRLF to LF while performing the checkout operation.
 #git config --global core.autocrlf input
 
-

@@ -35,5 +35,3 @@ function file_text_profiling (){
 }
 
 
-
-
