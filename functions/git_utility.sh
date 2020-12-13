@@ -10,6 +10,17 @@ function git_commit_and_push_to_main (){
 	# git push -uf origin master # force
 	# git push origin HEAD:master
 	# git push origin HEAD:main
+	# git push origin <branch_name>
+}
+
+function git_conflict_resolution_advisory (){
+	echo "
+	git pull origin <branch_name> | grep -i 'CONFLICT'
+	git diff
+	
+	likely changes of same function by different people, Git is in a state of confusion and it asks the user to resolve the conflict manually before pulling to deter code collisions. 
+
+	"
 }
 
 # check which repo in Github
@@ -19,6 +30,16 @@ function git_which_repo (){
 
 function git_latest_status (){
 	git log -1
+}
+
+function git_N_status_from_branch (){
+	branch_name="$1"
+	N="$2"
+	
+	git log origin/"$branch_name" -"$N"
+	# if that branch is useful, get from that branch: 
+	# $ git branch
+	# $ git merge origin/"$branch_name" # or checkout
 }
 
 function git_search_by_ID (){
