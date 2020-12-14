@@ -38,6 +38,8 @@ function grep_containing (){
 		$ list_bash_functions | grep 'win' --color # matches
 		$ list_bash_functions | grep '.in' --color
 		"
+		
+		return 0
 	fi
 	
 	grep $pattern --color

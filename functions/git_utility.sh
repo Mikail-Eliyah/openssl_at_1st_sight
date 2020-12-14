@@ -42,7 +42,7 @@ function git_N_status_from_branch (){
 	branch_name="$1"
 	N="$2"
 	
-	git log origin/"$branch_name" -"$N"
+	git log --pretty=oneline origin/"$branch_name" -"$N"
 	# if that branch is useful, get from that branch: 
 	# $ git branch
 	# $ git merge origin/"$branch_name" # or checkout
@@ -136,6 +136,27 @@ function git_display_commit () {
 function git_resynch() {
 	#git fetch # tells local git to retrieve the latest meta-data info from the original (yet doesn’t do any file transferring. just checking to see if there are any changes available).
 	#git rebase origin/master
+	
+	if [ "$1" == '-h' ]; then
+		echo "
+	merge tries to put commits from other branches on top of the HEAD of the current local branch.
+
+	For example, 
+	local branch: A−>B−>C−>D 
+	remote merge branch : A−>B−>X−>Y, 
+	then git merge convert current local branch to: A−>B−>C−>D−>X−>Y
+	
+	rebase : tries to find out the common ancestor between the current local branch and the merge branch. It pushes the commits to the local branch by modifying the order of commits in the current local branch. branch merge command, but the difference is that it modifies the order of commits.
+
+	For example, 
+	local branch : A−>B−>C−>D 
+	remote merge branch : A−>B−>X−>Y, 
+	then Git rebase convert current local branch to: A−>B−>X−>Y−>C−>D.
+
+		"
+		return 0
+	fi
+	
 	echo 'Fetch Latest Changes: synchronize local repository with remote'
 	git pull
 	git log

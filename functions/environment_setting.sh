@@ -16,6 +16,11 @@ function query_system_profile () {
 	
 }
 
+function live_test_Kharon_support_kit (){
+	echo "Kharon_support_kit is live at: "
+	get_timestamp;
+}
+
 
 
 # set path ## please note 'PATH' is CASE sensitivity and must be in UPPERCASE ##

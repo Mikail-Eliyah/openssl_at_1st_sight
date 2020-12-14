@@ -34,4 +34,33 @@ function file_text_profiling (){
 	echo "max_line_length_of_file: " ${max_line_length_of_file%"$file_with_path"}
 }
 
+function sort_list (){
+	file_in="$1"
+	file_out="$2"
+	
+	sort < "$file_in" > "$file_out"
+}
+
+function grep_in_file_starting_with (){
+	pattern="$1"
+		file_in="$2"
+	
+	grep_starting_with "$pattern" < "$file_in"
+
+}
+
+function grep_in_file_containing (){
+	pattern="$1"
+	file_in="$2"
+	
+	grep_containing "$pattern" < "$file_in"
+}
+
+function grep_in_file_ending_with (){
+	pattern="$1"
+	file_in="$2"
+	
+	grep_ending_with "$pattern" < "$file_in"
+}
+
 
