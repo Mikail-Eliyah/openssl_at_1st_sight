@@ -63,4 +63,36 @@ function grep_in_file_ending_with (){
 	grep_ending_with "$pattern" < "$file_in"
 }
 
+# $ add_character_in_front_of_every_line <file_in> '#'
+# $ add_character_in_front_of_every_line <file_in> '\\\\'
+function add_character_in_front_of_every_line (){
+	file_in="$1"
+	pattern="$2"	
+	
+	sed 's/^/'$pattern'/' < "$file_in"
+}
+
+# $ remove_character_in_front_of_every_line <file_in> 'def'
+function remove_character_in_front_of_every_line (){
+	file_in="$1"
+	pattern="$2"	
+	
+	# sed 's/^.....//' < "$file_in" # remove 1st 5 characters
+	sed 's/^'$pattern'//' < "$file_in"
+}
+
+# $ remove_1st_N_character_in_front_of_every_line <file_in> 5
+function remove_1st_N_character_in_front_of_every_line (){
+	file_in="$1"
+	N="$2"
+	pattern="."	
+	
+	for i in $(seq 1 1 $N)
+	do 
+     pattern="$pattern".
+	done	
+	
+	sed 's/^'$pattern'//' < "$file_in" # remove 1st N characters
+}
+
 
