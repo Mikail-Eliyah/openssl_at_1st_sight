@@ -45,6 +45,25 @@ function grep_containing (){
 	grep $pattern --color
 }
 
+function grep_containing_not (){
+	pattern="$1"
+	
+	if [ "$1" == '-h' ]; then
+		echo "
+		grep $pattern --color
+		e.g. 
+		$ list_bash_functions | grep '[*sa]' --color # contains
+		$ list_bash_functions | grep 'in[dat]' --color # contains a or d or t
+		$ list_bash_functions | grep 'win' --color # matches
+		$ list_bash_functions | grep '.in' --color
+		"
+		
+		return 0
+	fi
+	
+	grep -v $pattern --color
+}
+
 function grep_ending_with (){
 	pattern="$1"
 	

@@ -56,6 +56,13 @@ function grep_in_file_containing (){
 	grep_containing "$pattern" < "$file_in"
 }
 
+function grep_in_file_containing_not (){
+	pattern="$1"
+	file_in="$2"
+	
+	grep_containing_not "$pattern" < "$file_in"
+}
+
 function grep_in_file_ending_with (){
 	pattern="$1"
 	file_in="$2"
