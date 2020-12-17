@@ -21,6 +21,11 @@ function live_test_Kharon_support_kit (){
 	get_timestamp;
 }
 
+function open_notepad (){
+	file_name="$1"
+	notepad "$file_name"
+	# open -a 'Sublime Text' $HOME/scripts/data/data.txt # for Mac
+}
 
 
 # set path ## please note 'PATH' is CASE sensitivity and must be in UPPERCASE ##

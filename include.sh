@@ -45,3 +45,6 @@ source $HOME"/scripts/functions/folders_and_files.sh"
 #dos2unix $number_of_levels_up"miscellany_tests/test_cases.sh"
 #source $number_of_levels_up"miscellany_tests/test_cases.sh"
 source $HOME"/scripts/functions/git_utility.sh"
+
+# [utilities]
+source $HOME"/scripts/utilities/text_formatter.sh"
