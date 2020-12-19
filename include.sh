@@ -48,3 +48,4 @@ source $HOME"/scripts/functions/git_utility.sh"
 
 # [utilities]
 source $HOME"/scripts/utilities/text_formatter.sh"
+source $HOME"/scripts/utilities/cipher_message_file_and_hash.sh"

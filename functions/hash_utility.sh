@@ -28,6 +28,13 @@ function hash_file(){
 	ANS=$(openssl dgst -$hash_algo $filename | awk '{print $2}')
 }
 
+function hash_file_give_file_path(){
+	filename="$1"
+	
+	ANS=$(openssl dgst -$hash_algo $filename | awk '{print $2}')
+	echo $ANS
+}
+
 function pack_and_hash_file(){
 	read -p '[foldier_to_pack_and_hash, e.g. current folder: '.' or "./messages/"]: ' foldier_to_pack_and_hash
 	
