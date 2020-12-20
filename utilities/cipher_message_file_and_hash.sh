@@ -9,26 +9,15 @@ NC='\033[0m' # No Color
 
 function cipher_message_file_and_hash () {
 	echo "Enter comment / notes (and save, this file will NOT be removed after result output to console) : "
-	echo $data_home_path'/'$file_name_tmp
-	file_name_tmp=$data_home_path'/'$file_name_tmp
-
-		fullfile=$file_name_tmp
-		echo $fullfile
-		ret="$(get_file_name_and_extension)"
-		IFS="|"
-		set -- $ret
-		echo "filename : $1"
-		echo "extension : $2"
-		
-	file_renamed="$1"_$(get_timestamp)."$2"
-	file_renamed_with_path=$data_home_path'/'"$file_renamed"
+	
+	file_renamed_with_path=$(add_timestamp_to_file_name $data_home_path'/'$file_name_tmp)
 	echo "Created: " $file_renamed_with_path
 	touch $file_renamed_with_path 
 	echo $file_renamed_with_path 
 	open_notepad 'log.txt'
 	
-	cp -rf 'log.txt' $file_renamed_with_path 
-	rm -rf 'log.txt'
+	cp $file_name_tmp $file_renamed_with_path 
+	rm -rf $file_name_tmp
 	
 	hash_result=$(hash_file_give_file_path $file_renamed_with_path) # >> $file_renamed_with_path 
 	
@@ -48,14 +37,11 @@ function decipher_message_file_and_check_hash () {
 	
 	# echo $status
 	if [ $status == "true" ]; then
-		fullfile=$file_ciphered_with_path
-		ret="$(get_file_name_and_extension)"
-		IFS="|"
-		set -- $ret
-		echo "filename : $1"
-		#echo "extension : $2"
+		file_path=$(get_file_path $file_ciphered_with_path)
+		file_name=$(get_file_name $file_ciphered_with_path)
+		#file_type=$(get_file_type $file_ciphered_with_path)
 		
-		file_deciphered_with_path=$data_home_path'/'"$1"_deciphered.txt
+		file_deciphered_with_path=$file_path'/'"$file_name"_deciphered.txt
 		
 		decipher_file $file_ciphered_with_path $file_deciphered_with_path 
 		
