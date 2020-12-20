@@ -59,6 +59,69 @@ function create_session_folder { # archive or delete after use (manual for now)
 	cd $session_folder_name	
 }
 
+function get_file_type() {  
+	# fullfile='C:\Users\x\Desktop\fs.cfg'
+	fullfile="$1"
+	
+	filename=$(basename -- "$fullfile")
+	extension="${filename##*.}"
+
+	eval $extension="'$extension'"
+	echo $extension
+}
+
+function get_file_name() {  
+	fullfile="$1"
+	
+	filename=$(basename -- "$fullfile")
+	filename="${filename%.*}"
+
+	eval $filename="'$filename'"
+	echo $filename
+}
+
+function get_file_path() {  
+	fullfile="$1"
+	
+	filename=$(basename -- "$fullfile")
+	file_path=$(remove_suffix $fullfile $filename)
+	echo $file_path
+}
+
+function add_timestamp_to_file_name {     
+	if [ "$1" == "-h" ] # help 
+	then
+		echo "add_timestamp_to_file_name <file_path>/<file_name>.<file_type>"
+	else				# execute
+		file_with_path="$1"
+		file_path=$(get_file_path $file_with_path)
+		file_name=$(get_file_name $file_with_path)
+		file_type=$(get_file_type $file_with_path)
+	
+		file_renamed="$file_path$file_name"_$(get_timestamp)."$file_type"
+		echo $file_with_path "is updated as"
+		echo $file_renamed
+	fi;	
+}
+
+function change_file_type {     
+	if [ "$1" == "-h" ] # help 
+	then
+		echo "change_file_type <file_path>/<file_name>.<file_type> <file_type_new>"
+	else				# execute
+		file_with_path="$1"
+		file_path=$(get_file_path $file_with_path)
+		file_name=$(get_file_name $file_with_path)
+		#file_type=$(get_file_type $file_with_path)
+		file_type_new="$2"
+	
+		file_renamed="$file_path$file_name"."$file_type_new"
+		echo $file_with_path "is updated as"
+		echo $file_renamed
+	fi;	
+}
+
+
 # update_file_timestamp <file> <file_main_name> <file_type>; `remove rm -rf "$1";` for backups (if the time_stamp is the same, the file will be deleted inadvertently just because of the `cp`, hence, the names are checked 1st)
 # Usage: to update logs version
 # Sample use: update_file_timestamp notes_2017-06-03_1159hr.txt notes txt
@@ -77,7 +140,9 @@ function update_file_timestamp {
 	
 		cp $fullfile "$1"_$(get_timestamp)."$2"; 
 		rm -rf $fullfile
-		echo $fullfile "is updated as" "$1"_$(get_timestamp)."$2"
+		file_renamed=$("$1"_$(get_timestamp)."$2")
+		echo $fullfile "is updated as"
+		echo $file_renamed
 	fi;	
 }
 echo ""
