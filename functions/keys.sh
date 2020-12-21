@@ -47,6 +47,15 @@ function generate_key_for_ciphering(){
 	fi
 }
 
+function display_key_profile(){
+	key_file="$1"
+	
+	cat $key_file | grep -i "private\|public\|pub" --color
+	echo ""
+	echo "key: "
+	cat $key_file
+}
+
 function display_key_for_ciphering(){
 	key_file=$key_aes_cbc_ciphering_file
 	retrieve_key_from_key_file;

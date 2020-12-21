@@ -9,6 +9,12 @@ function display_cert () {
 	openssl x509 -in ../certs/ursa.ecc.secp256r1.crt -text -noout
 }
 
+function display_certificate () {
+	#certs_path='../certs/'
+	# openssl x509 -in $certs_path* -text -noout
+	openssl x509 -in "$1" -text -noout
+}
+
 # $ openssl x509 -in ../certs/ursa.ecc.secp256r1.crt -text -noout
 
 function sign_with_rsa_pss (){

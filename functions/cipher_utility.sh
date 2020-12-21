@@ -20,10 +20,6 @@ function pack_n_sha {
 	echo $sha256_result; 
 }
 
-function get_file_sha { 
-	sha256_result=$(openssl dgst -sha256 "$1"); echo $sha256_result; 
-}
-
 #function cipher_file { openssl enc -aes-256-cbc -salt -in "$1" -out "$2"; }
 #function decipher_file { openssl enc -aes-256-cbc -d -in "$1" -out "$2"; }
 function cipher_file { 

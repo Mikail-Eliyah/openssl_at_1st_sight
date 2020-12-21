@@ -12,7 +12,7 @@ function hash_message(){
 	ANS=$(echo $message_input | openssl $hash_algo | awk '{print $2}')
 }
 
-function hash_file(){
+function hash_file_with_prompt(){
 	read -p '[file_to_hash]: ' file_to_hash
 	filename=$message_store_path$file_to_hash
 	check_if_file_exists;
@@ -26,6 +26,24 @@ function hash_file(){
 	fi
 	
 	ANS=$(openssl dgst -$hash_algo $filename | awk '{print $2}')
+}
+
+function hash_file(){
+	filename="$1"
+	file_to_hash="$1"
+	check_if_file_exists;
+	
+	if [ $status == "false" ]; then 
+		label="[ "$file_to_hash" does not exist. ]";
+		print_label;	
+	else
+		label="[ "$file_to_hash" exists. ]";
+		print_label;
+	fi
+	
+	ANS=$(openssl dgst -$hash_algo $filename | awk '{print $2}')
+	
+	echo $ANS
 }
 
 function hash_file_give_file_path(){
@@ -148,3 +166,8 @@ function compare_contents () {
 	echo ""
 	rm -rf $tmp_file_for_contents_00 $tmp_file_for_contents_01
 }
+
+function get_file_sha { 
+	sha256_result=$(openssl dgst -sha256 "$1"); echo $sha256_result; 
+}
+
