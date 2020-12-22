@@ -219,7 +219,7 @@ function get_time_elapsed(){
 	time_elapsed_secs_float=$(echo "$time_elapsed_milisecs 1000" | awk '{printf "%.3f \n", $1/$2}')
 	echo 'time_elapsed_secs: ' $time_elapsed_secs_float
 	
-	echo 'time_elapsed: ' $( get_time_left $time_elapsed_secs_float)
+	# echo 'time_elapsed: ' $(get_time_left $time_elapsed_secs_float)
 }
 
 function check_time_diff_example() {

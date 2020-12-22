@@ -44,6 +44,7 @@ function random_select_font(){
 	endColor='\e[0m'	
 }
 
+#$ font_display $(echo $(hash_file <filename>))	
 function font_display(){
 	random_select_font;
 	text="$1"
@@ -51,8 +52,7 @@ function font_display(){
 	echo -e "\e[1;${index_color[$index_color_choice]}m $text.${endColor}"	
 	
 }
-	
-#$ font_display $(echo $(hash_file <filename>))	
+
 function test_font_display(){
 	random_select_font;
 	text="$1"
