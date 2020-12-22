@@ -17,10 +17,10 @@ function print_label_with_color() {
 	echo $demarcator
 }
 
-function font_display(){
 	grey=30; red=31; green=32; yellow=33; blue=34; purple=35; blue_light=36
 	index_color=($grey $red $green $yellow $blue $purple $blue_light)
-
+	
+function random_select_font(){
 	# random select
 	floor=$grey;
 	ceiling=$blue_light;
@@ -29,9 +29,6 @@ function font_display(){
 	let "result %= $range";
 	#index_color_choice=$(($result + $floor));
 	index_color_choice=$result;
-
-	#text='view'
-	text="$1"
 	
 	# random select
 	floor=0;
@@ -44,8 +41,22 @@ function font_display(){
 	highlight=47 # white
 	
 	green='\e[0;32m' # '\e[1;32m' is too bright for white bg.
-	endColor='\e[0m'
+	endColor='\e[0m'	
+}
 
+function font_display(){
+	random_select_font;
+	text="$1"
+	
+	echo -e "\e[1;${index_color[$index_color_choice]}m $text.${endColor}"	
+	
+}
+	
+#$ font_display $(echo $(hash_file <filename>))	
+function test_font_display(){
+	random_select_font;
+	text="$1"
+	
 	echo -e "\e[$intensity;${index_color[$index_color_choice]}m $text.${endColor}"
 	
 	echo -e "\e[$intensity;${index_color[$index_color_choice]};47m $text.${endColor}"	

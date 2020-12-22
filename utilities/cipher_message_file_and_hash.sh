@@ -21,7 +21,10 @@ function cipher_message_file_and_hash () {
 	
 	hash_result=$(hash_file_give_file_path $file_renamed_with_path) # >> $file_renamed_with_path 
 	
-	echo -e "hash_result: ${NC} << ${BLUE_TEXT}$hash_result${NC} >>"
+	random_select_font;
+	# echo ${index_color[$index_color_choice]}
+	
+	font_display "hash_result: << $hash_result ${NC} >>"
 		
 	cipher_file  $file_renamed_with_path $file_renamed_with_path'.enc' 
 }
@@ -52,7 +55,10 @@ function decipher_message_file_and_check_hash () {
 		echo ""
 		hash_result=$(hash_file_give_file_path $file_deciphered_with_path) 
 
-		echo -e "file hash: ${NC} << ${BLUE_TEXT}$hash_result${NC} >>"
+		# echo -e "file hash: ${NC} << ${BLUE_TEXT} $hash_result${NC} >>"
+		random_select_font;
+		
+		font_display "file hash: << $hash_result >>"
 		
 		return;
 	else
