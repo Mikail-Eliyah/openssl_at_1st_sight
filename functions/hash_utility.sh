@@ -28,6 +28,7 @@ function hash_file_with_prompt(){
 	ANS=$(openssl dgst -$hash_algo $filename | awk '{print $2}')
 }
 
+
 function hash_file(){
 	filename="$1"
 	file_to_hash="$1"
@@ -46,7 +47,7 @@ function hash_file(){
 	echo $ANS
 }
 
-function hash_file_give_file_path(){
+function hash_file_given_file_path(){
 	filename="$1"
 	
 	ANS=$(openssl dgst -$hash_algo $filename | awk '{print $2}')
