@@ -1,5 +1,15 @@
 #!/bin/sh
 
+function introspect_function(){
+	if [ ! -z "$1" ]; then
+		if [ "$1" == '--introspect' ]; then
+			echo 'Usage: ' $introspect_statement
+			echo $demarcator
+			return
+		fi			
+	fi		
+}
+
 function query_system_profile () {
 	uname -a
 	whoami
@@ -25,6 +35,11 @@ function open_notepad (){
 	file_name="$1"
 	notepad "$file_name"
 	# open -a 'Sublime Text' $HOME/scripts/data/data.txt # for Mac
+}
+
+function open_notepad_plus (){
+	file_name="$1"
+	'/cygdrive/c/Program Files (x86)/Notepad++/notepad++.exe' "$file_name"
 }
 
 
