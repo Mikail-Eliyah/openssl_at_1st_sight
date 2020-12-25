@@ -49,7 +49,15 @@ function font_display(){
 	random_select_font;
 	text="$1"
 	
-	echo -e "\e[1;${index_color[$index_color_choice]}m $text.${endColor}"	
+	echo -e "\e[1;${index_color[$index_color_choice]}m $text${endColor}"	
+	
+}
+
+function font_on_screen_typing_display(){
+	random_select_font;
+	text="$1"
+	
+	echo -e "\e[1;${index_color[$index_color_choice]}m $text${endColor}" | pv -qL 10
 	
 }
 
