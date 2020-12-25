@@ -3,6 +3,7 @@ source './supports/entity_service_model.sh'
 
 source $HOME'/scripts/include.sh'
 
+
 function membership_access_test () {
 	ID_set;
 	ID_get;
@@ -44,6 +45,22 @@ function membership_access_test () {
 	is_member_of_domain $domain_00_CA
 	is_member_of_domain $domain_01_CA
 	echo ""
+	
+	domain_0X_CA=$path_main'/domain_0X_CA.txt' 
+	
+	label="[examining exist_domain_relevant_to_entity]"
+	print_label;
+	exist_domain_relevant_to_entity $domain_00_CA
+	exist_domain_relevant_to_entity $domain_01_CA
+	exist_domain_relevant_to_entity $domain_0X_CA
+	echo ""
+	
+	label="[examining is_valid_domain_to_entity]"
+	print_label;
+	is_valid_domain_to_entity $domain_00_CA
+	is_valid_domain_to_entity $domain_01_CA
+	is_valid_domain_to_entity $domain_0X_CA
+	echo ""	
 }
 
 function introspect_test () {

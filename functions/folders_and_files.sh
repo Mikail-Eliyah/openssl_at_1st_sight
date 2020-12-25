@@ -100,6 +100,10 @@ function check_if_file_exists_halt_and_exit_otherwise() {
 }
 
 function check_if_file_exists() {
+	if [ ! -z "$1" ]; then
+		filename="$1"
+	fi	
+	
 	if [ -f $filename ]; then 
 		echo " "$filename" exists"; 
 		status="true"

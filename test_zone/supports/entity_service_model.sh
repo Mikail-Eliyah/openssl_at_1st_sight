@@ -29,15 +29,17 @@ declare -a functions_of_service=(
 'register_for_domain'
 'unregister_for_domain'
 'is_member_of_domain'
+'exist_domain_relevant_to_entity'
+'is_valid_domain_to_entity'
 )
 number_of_functions=${#functions_of_service[@]}
 
+path_main=$HOME'/scripts/test_zone/test_data'
+state_with_path=$path_main'/state_ursa.txt'
+ID_with_path=$path_main'/ID_ursa.txt'
 
-state_with_path='./test_data/state_ursa.txt'
-ID_with_path='./test_data/ID_ursa.txt'
-
-domain_00_CA='./test_data/domain_00_CA.txt' # is member
-domain_01_CA='./test_data/domain_01_CA.txt' # is NOT member
+domain_00_CA=$path_main'/domain_00_CA.txt' # is member
+domain_01_CA=$path_main'/domain_01_CA.txt' # is NOT member
 
 ##############################
 function model_entity_fingerprint_get () {
@@ -51,8 +53,8 @@ function model_entity_fingerprint_get () {
 	fi	
 	
 	if [ -z "$1" ]; then
-		label="[model_entity_fingerprint_get]"
-		print_label;		
+		#label="[model_entity_fingerprint_get]"
+		#print_label;		
 		hash_file_given_file_path './supports/entity_service_model.sh' # "$0"
 	fi
 }
@@ -94,8 +96,8 @@ function discover_all_apis(){
 
 	label="[discover_all_apis]"
 	print_label;	
-	get_functions_in_script "$0" # ./lab_service_model.sh
-	
+	get_functions_in_script ./supports/entity_service_model.sh
+	# get_functions_in_script "$0" # ./lab_entity_service_model.sh
 }
 
 function verified_registered_apis(){
@@ -261,10 +263,75 @@ function is_member_of_domain(){
 	entity_id=$(model_entity_fingerprint_get) 
 	
 	if [ "$entity_id" == "$membership_of_target_domain" ]; then
+		status='true'
 		echo "is a member of : " $target_domain
 	else
+		status='false'
 		echo "is not a member of : " $target_domain
 	fi	
+}
+
+function exist_domain_relevant_to_entity(){
+	target_domain="$1" # $domain_00_CA or $domain_01_CA
+	
+	introspect_statement="exist_domain_relevant_to_entity"
+	if [ ! -z "$1" ]; then
+		if [ "$1" == '--introspect' ]; then
+			echo 'Usage: ' $introspect_statement
+			echo $demarcator
+			return
+		fi			
+	fi	
+	
+	#filename=$target_domain
+	check_if_file_exists $target_domain
+	
+	if [ $status == 'true' ]; then
+		echo "$target_domain does exists";
+		status="true"
+	else 
+		echo "$target_domain does NOT exists";
+		status="false"
+		#exit;
+	fi;
+	
+}
+
+function is_valid_domain_to_entity(){
+	target_domain="$1" # $domain_00_CA or $domain_01_CA
+	
+	introspect_statement="is_valid_domain_to_entity"
+	if [ ! -z "$1" ]; then
+		if [ "$1" == '--introspect' ]; then
+			echo 'Usage: ' $introspect_statement
+			echo $demarcator
+			return
+		fi			
+	fi	
+	
+	label="[Existence checking]: preuve d’etre"
+	print_label;
+	status='unknown' # clear to unknown
+	exist_domain_relevant_to_entity $target_domain
+	if [ $status == 'true' ]; then
+		echo "$target_domain does exists";
+	else 
+		echo "$target_domain does NOT exists";
+		return
+	fi;	
+	
+	label="[Relevance checking]: raison d’etre"
+	print_label;
+	status='unknown' # clear to unknown
+	is_member_of_domain $target_domain
+	if [ $status == 'true' ]; then
+		echo "is_member_of_domain : $target_domain";
+	else 
+		echo "is_member_of_domain NOT : $target_domain";
+		return
+	fi;		
+	
+	# once reached here, status is true
 }
 
 # ===========================================================
