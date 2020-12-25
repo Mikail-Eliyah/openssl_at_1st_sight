@@ -99,7 +99,7 @@ function add_timestamp_to_file_name {
 		file_type=$(get_file_type $file_with_path)
 	
 		file_renamed="$file_path$file_name"_$(get_timestamp)."$file_type"
-		echo $file_with_path "is updated as"
+		#echo $file_with_path "is updated as"
 		echo $file_renamed
 	fi;	
 }
@@ -140,7 +140,7 @@ function update_file_timestamp {
 	
 		cp $fullfile "$1"_$(get_timestamp)."$2"; 
 		rm -rf $fullfile
-		file_renamed=$("$1"_$(get_timestamp)."$2")
+		file_renamed="$1"_$(get_timestamp)."$2"
 		echo $fullfile "is updated as"
 		echo $file_renamed
 	fi;	

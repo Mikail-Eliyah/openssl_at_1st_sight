@@ -1,5 +1,6 @@
 # source $HOME'/scripts/include.sh'
 source './supports/entity_service_model.sh'
+source './supports/entity_generation.sh'
 
 source $HOME'/scripts/include.sh'
 
@@ -73,10 +74,14 @@ function introspect_test () {
 
 function ID_test () {
 	model_entity_fingerprint_get;
+	birth_cert_generation;
+	birth_cert_ID_set;
+	birth_cert_ID_get;
+	birth_cert_display;
 }
 
 declare -a states_of_tests=(
-'ON'
+'OFF'
 'OFF'
 'ON'
 )
