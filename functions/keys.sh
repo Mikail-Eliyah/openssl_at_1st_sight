@@ -256,6 +256,14 @@ function display_key_dsa_for_signing () {
 	fi
 }
 
+#ECDSA: P-256 curve
+#EdDSA : Curve25519
+# generating a elliptic curve P-256 key pair (# ECDSA: P-256 curve)
+#private_key_EC_P256=”$1”
+#public_key_EC_P256=”$2”
+#openssl ecparam -name prime256v1 -genkey -out $private_key_EC_P256
+#openssl ec -in $private_key_EC_P256 -pubout -out $public_key_EC_P256
+
 function generate_key_ecc_for_signing () {
 	label="[Creating ECC signing key: "$key_ec_signing_private"]";
 	print_label;

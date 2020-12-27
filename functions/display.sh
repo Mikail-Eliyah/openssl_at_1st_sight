@@ -56,8 +56,9 @@ function font_display(){
 function font_on_screen_typing_display(){
 	random_select_font;
 	text="$1"
+	speed_typing=10
 	
-	echo -e "\e[1;${index_color[$index_color_choice]}m $text${endColor}" | pv -qL 10
+	echo -e "\e[1;${index_color[$index_color_choice]}m $text${endColor}" | pv -qL $speed_typing
 	
 }
 

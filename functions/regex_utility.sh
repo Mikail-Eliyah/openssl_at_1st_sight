@@ -122,6 +122,34 @@ function find_lines_containing_str () {
 	echo "number_of_lines_found: " $number_of_lines_found
 }
 
+function find_line_containing_str_in_file(){
+	file_name="$1"
+	key_word_to_search="$2"
+	
+	statement_found=$(cat $file_name | grep -i "$key_word_to_search")
+	
+		if [ ! -z "$statement_found" ]; then
+			font_display "$statement_found"
+			echo ""
+		else
+			echo "[No hits] Nothing found."
+		fi
+}
+
+function find_line_containing_str(){
+	line="$1"
+	key_word_to_search="$2"
+	
+	statement_found=$(echo "$line" | grep -i "$key_word_to_search")
+	
+		if [ ! -z "$statement_found" ]; then
+			font_display "$statement_found"
+			echo ""
+		else
+			echo "[No hits] Nothing found."
+		fi
+}
+
 function change_upper_to_lower_case (){
 	str="$1"
 	echo $str | tr '[:upper:]' '[:lower:]'
