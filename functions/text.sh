@@ -17,6 +17,21 @@ function remove_spaces {
 	echo $var
 }
 
+function remove_before { 
+	target_str="$1"
+	remove_before="$2"
+	
+	resultant=$(echo $target_str | sed 's/^.*'$remove_before'/'$remove_before'/')
+	echo $resultant
+}
+
+function remove_after { 
+	target_str="$1"
+	remove_after="$2"
+	
+	resultant=$(echo $target_str | sed 's/'$remove_after'.*/'$remove_after'/')
+	echo $resultant	
+}
 
 function remove_prefix { 
 	target_str="$1"
@@ -209,3 +224,5 @@ function word_count_in_str(){
 	
 	echo "number_of_words:" $number_of_words
 }
+
+

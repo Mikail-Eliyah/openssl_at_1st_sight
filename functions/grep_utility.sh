@@ -12,6 +12,42 @@ function grep_fields_with_different_start_and_end_labels (){
 	find $path_start -regex ".*\.\($file_type\)" -type f -exec awk '/'$label_start'/,/'$label_end'/ {print FILENAME ":" FNR ":" $0}' {} \; | sed -e 's/'$label_start'/ /g' | sed -e 's/'$label_end'/ /g'
 }
 
+function grep_fields_with_different_start_and_end_labels_in_line_retaining_labels (){
+	statement="$1"
+	
+	statement_detected=$(
+	echo "$statement" | awk '/'$label_start'/,/'$label_end'/') 
+	# | sed -e 's/'$label_start'/ /g' | sed -e 's/'$label_end'/ /g'
+	
+	if [ -z "$statement_detected" ]; then
+		echo "Nothing detected."
+	else
+		#echo "removing by: " "$label_start"
+		statement_detected_formatted=$(remove_before "$statement_detected" "$label_start")
+		
+		#echo $statement_detected_formatted
+		#echo "removing by: " "$label_end"
+		
+		statement_detected_formatted=$(remove_after "$statement_detected_formatted" "$label_end")
+		
+		echo $statement_detected_formatted
+	fi
+}
+
+function grep_fields_with_different_start_and_end_labels_in_line_without_labels (){
+	statement="$1"
+	
+	# extract text between tag and remove tags
+	statement_detected=$(echo "$statement" | grep -oP '(?<='$label_start').*(?='$label_end')')
+
+	if [ -z "$statement_detected" ]; then
+		echo "Nothing detected."
+	else
+		echo $statement_detected
+	fi
+}
+
+
 function grep_starting_with (){
 	pattern="$1"
 	

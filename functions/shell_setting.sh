@@ -69,6 +69,26 @@ function find_bash_function_in_list(){
  
 }
 
+function locate_bash_function_in_list(){
+	keyword="$1"
+	if [ ! -z $keyword ] # not empthy 
+		then : # 
+			echo '=========== [start] ==========='
+			list_bash_functions | seek_further "$keyword"
+			echo ""
+			read   -p "select function from candidate list above:" keyword			
+			echo ""
+			echo "The function is located at: "
+			GREP_COLORS='ms=01;36' grep -ir --color=always "$keyword" $HOME'/scripts/';
+			echo '============ [end] ============'	
+		else : # $1 was not given 
+			echo '=========== [start] ==========='
+			list_bash_functions 
+			echo '============ [end] ============'		
+	fi
+ 
+}
+
 function where_is_function(){
 	keyword="$1"
 	path_start=$HOME'/scripts/functions/'
