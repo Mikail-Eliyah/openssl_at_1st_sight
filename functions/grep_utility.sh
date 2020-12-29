@@ -12,6 +12,13 @@ function grep_fields_with_different_start_and_end_labels (){
 	find $path_start -regex ".*\.\($file_type\)" -type f -exec awk '/'$label_start'/,/'$label_end'/ {print FILENAME ":" FNR ":" $0}' {} \; | sed -e 's/'$label_start'/ /g' | sed -e 's/'$label_end'/ /g'
 }
 
+# extract lines
+function grep_fields_with_different_start_and_end_labels_in_file_retaining_labels (){
+	file_name="$1"
+	find -regex $file_name -exec awk '/'$label_start'/,/'$label_end'/ {print $0}' {} \; 
+	# | sed -e 's/'$label_start'/ /g' | sed -e 's/'$label_end'/ /g'
+}
+
 function grep_fields_with_different_start_and_end_labels_in_line_retaining_labels (){
 	statement="$1"
 	
@@ -34,7 +41,7 @@ function grep_fields_with_different_start_and_end_labels_in_line_retaining_label
 	fi
 }
 
-function grep_fields_with_different_start_and_end_labels_in_line_without_labels (){
+function grep_fields_with_different_start_and_end_labels_in_line_and_remove_labels (){
 	statement="$1"
 	
 	# extract text between tag and remove tags

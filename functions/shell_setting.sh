@@ -79,7 +79,7 @@ function locate_bash_function_in_list(){
 			read   -p "select function from candidate list above:" keyword			
 			echo ""
 			echo "The function is located at: "
-			GREP_COLORS='ms=01;36' grep -ir --color=always "$keyword" $HOME'/scripts/';
+			GREP_COLORS='ms=01;36' grep -ir --color=always $keyword $HOME'/scripts/' | seek_further 'function'
 			echo '============ [end] ============'	
 		else : # $1 was not given 
 			echo '=========== [start] ==========='
