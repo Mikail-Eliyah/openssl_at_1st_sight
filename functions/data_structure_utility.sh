@@ -1,7 +1,27 @@
 	# globals (as there is no return of arrays)
 	declare -a array_elements=() ## declare an array variable
 
-function get_file_content_lines_in_array(){
+ 
+#array=("... " "string 2" "...")
+ 
+# array=$(read_list_from_file_into_1_array_element $filename "${array[@]}")
+
+function read_list_from_file_into_1_array_element(){
+	filename="$1"
+	array_to_load_to=("$@")
+	
+	IFS=$'\r\n' 
+	GLOBIGNORE='*' 
+	eval  'array_to_load_to=($(cat '$filename'))' # entire file in 1 array element
+
+   #for i in "${array_to_load_to[@]}";
+   #   do
+   #       echo "$i"
+   #   done	
+}
+
+
+function get_file_content_lines_into_array(){
 	IFS=$'\r\n' GLOBIGNORE='*' command eval  'line_contents=($(cat $path_to_file))'
 
 	# echo "${line_contents[5]}"
@@ -40,7 +60,7 @@ function write_array_to_file(){
 }
 
 function read_array_from_file(){
-	get_file_content_lines_in_array;
+	get_file_content_lines_into_array;
 }
 
 function remove_multiple_elements_from_array(){

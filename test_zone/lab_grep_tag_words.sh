@@ -97,6 +97,12 @@ function trial_03() {
 	print_label;
 	grep_fields_with_different_start_and_end_labels_in_file_retaining_labels $data_path
 	
+	#label="[serialized]"
+	#print_label;
+	#a=$(grep_fields_with_different_start_and_end_labels_in_file_retaining_labels $data_path)
+	
+	echo $a
+	
 }
 
 # [main]

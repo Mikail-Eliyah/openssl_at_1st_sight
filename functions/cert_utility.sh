@@ -173,6 +173,54 @@ function get_cert_from_dns_name_with_port (){
 
 }
 
+# caveat: depends on which signing_algo used in cert generation
+# key_rsa_signing_private to be generalized to key_xxx_signing_private
+# cert_with_path to be cert_with_path=$certs_path$cert_name'.xxx.'$key_length'.crt'
+# where xxx := rsa, dsa, ecc
+function generate_cert_from_cnf_for_signing_rsa(){
+	key_signing_private=$key_rsa_signing_private
+	cert_with_path=$cert_rsa_with_path
+	generate_cert_from_cnf_for_signing;
+}
+
+function generate_cert_from_cnf_for_signing_dsa(){
+	key_signing_private=$key_dsa_signing_private
+	cert_with_path=$cert_dsa_with_path
+	generate_cert_from_cnf_for_signing;
+}
+
+function generate_cert_from_cnf_for_signing_ecc(){
+	key_signing_private=$key_ec_signing_private
+	cert_with_path=$cert_ecc_with_path
+	generate_cert_from_cnf_for_signing;
+}
+
+function generate_cert_from_cnf_for_signing() {
+	entity_name='ursa' 	# 
+	config_file_for_cert_generation=$cnf_path$entity_name'.cnf'
+	
+	# echo $config_file_path
+	
+	time_stamp=$(date +"%Y-%m-%d_%H%Mhr_%S"sec)
+	echo "Updated: " $time_stamp 
+
+	label="[Creating "$cert_with_path"]";
+	print_label;
+
+	openssl req -config $config_file_for_cert_generation -new -x509 -key $key_signing_private -out $cert_with_path
+	# openssl req -in $cert_with_path -noout -text
+	#cat $cert_with_path
+
+	#cat $cert_with_path'.pem'
+	# check that cert is correct:
+	# openssl x509 -in $cert_with_path -text
+	openssl x509 -text -noout -in $cert_with_path 
+
+	label="[Verify that "$cert_with_path" is issued by itself (RCA)]";
+	print_label;
+	# openssl verify -verbose -CAfile cacert.pem  server.crt
+	openssl verify -verbose -CAfile $cert_with_path $cert_with_path
+}
 
 : '
 notes: 
