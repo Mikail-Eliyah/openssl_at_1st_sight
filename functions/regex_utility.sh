@@ -93,6 +93,16 @@ function replace_all_occurrences_of_str0_with_str1 (){
 	echo $str | sed 's:'$str_target':'$replace_with':g'
 }
 
+function replace_all_occurrences_of_str0_with_str1_in_file (){
+	tag_to_be_replaced="$1" #  
+	tag_to_replace_with="$2" # 
+	file_target="$3"
+	file_out="$4"	
+
+	sed -e "s/"$tag_to_be_replaced"/"$tag_to_replace_with"/" $file_target > $file_out
+}
+
+
 function replace_all_occurrences_case_insensitve_of_str0_with_str1 (){
 	str="$1"
 	str_target="$2" # '\/var\/www\/'

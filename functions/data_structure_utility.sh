@@ -20,6 +20,20 @@ function read_list_from_file_into_1_array_element(){
    #   done	
 }
 
+function read_list_from_file_into_array(){
+	filename="$1"
+	array_to_load_to=("$@")
+	
+	readarray -t array_to_load_to < $filename
+	
+	echo ${#array_to_load_to[@]}
+	
+	for i in "${array_to_load_to[@]}";
+      do
+          echo "$i"
+      done	
+}
+
 
 function get_file_content_lines_into_array(){
 	IFS=$'\r\n' GLOBIGNORE='*' command eval  'line_contents=($(cat $path_to_file))'
